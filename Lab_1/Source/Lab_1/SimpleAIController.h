@@ -18,7 +18,7 @@ public:
 
 protected:
     virtual void Tick(float DeltaSeconds) override;
-
+	float importance(int orderNumber);
     bool bDeliveringOrder;
     int CurrentOrderNumber;
     FVector CurrentDestination;

@@ -23,7 +23,7 @@ ALab_1GameMode::ALab_1GameMode()
     HUDClass = APizzaHUD::StaticClass();
 
     // Spawn pizza every 2 seconds.
-    SpawnDelay = 2.0f;
+    SpawnDelay = 1.2f;
 
     TotalPizzaOrderCount = 0;
     DeliveredPizzaOrderCount = 0;
@@ -68,7 +68,7 @@ ELab_1PlayState ALab_1GameMode::GetCurrentState() const
 
 void ALab_1GameMode::SetCurrentState(ELab_1PlayState NewState)
 {
-    CurrentState = NewState;
+    CurrentState = NewState;	
     // Invoke the actions associated with transitioning to new state.
     HandleNewState(CurrentState);
 }

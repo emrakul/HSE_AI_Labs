@@ -34,7 +34,7 @@ AHouseActor::AHouseActor()
 
     HouseIndex = -1;
 
-    MaxWaitTime = 10.0f;
+    MaxWaitTime = 20.0f;
     bTimeoutReached = false;
 }
 
@@ -64,7 +64,10 @@ void AHouseActor::SetHouseIndex(int Index)
 
 bool AHouseActor::WaitsPizzaDelivery() const
 {
-    return PizzaOrders.Num() > 0;
+	if (PizzaOrders.Num() == 0) {
+		return false;
+	}
+	return true;
 }
 
 TSharedRef<FPizzaOrder> AHouseActor::OrderPizzaDelivery(int OrderNumber)

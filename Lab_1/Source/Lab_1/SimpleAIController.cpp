@@ -9,6 +9,17 @@ ASimpleAIController::ASimpleAIController()
     CurrentOrderNumber = -1;
 }
 
+float ASimpleAIController::importance(int orderNumber) {
+	auto Orders = GetPizzaOrders();
+	
+	auto HouseLocations = GetHouseLocations();
+	float distance = GetDistanceToDestination(HouseLocations[Orders[orderNumber].HouseNumber]);
+	float time = Orders[orderNumber].CurrentWaitTime;
+	//return (distance/600.f)/(20.f-time);
+	return (10500.f/distance)+(50.f/(20.f-time));
+	//return 0;
+}
+
 void ASimpleAIController::Tick(float DeltaSeconds)
 {
     if (bDeliveringOrder) {
@@ -39,15 +50,29 @@ void ASimpleAIController::Tick(float DeltaSeconds)
     auto HouseLocations = GetHouseLocations();
 
     int closestOrder = 0;
+	int mostImportantOrder = 0;
+	float mostImportance = 0;
     float closestDistance = GetDistanceToDestination(HouseLocations[Orders[0].HouseNumber]);
+	/*
     for (int i = 0; i < Orders.Num(); ++i) {
         float currentDistance = GetDistanceToDestination(HouseLocations[Orders[i].HouseNumber]);
+		float currentImportance = importance(i);
+
         if (currentDistance < closestDistance) {
             closestDistance = currentDistance;
             closestOrder = i;
         }
     }
-    auto Order = Orders[closestOrder];
+	auto Order = Orders[closestOrder];
+	*/
+	for (int i = 0; i < Orders.Num(); ++i) {		
+		float currentImportance = importance(i);
+		if (currentImportance > mostImportance) {
+			mostImportance = currentImportance;
+			mostImportantOrder = i;
+		}
+	}
+	auto Order = Orders[mostImportantOrder];
 
     int PizzaAmount = GetPizzaAmount();
     if (PizzaAmount == 0) {
